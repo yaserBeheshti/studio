@@ -81,14 +81,14 @@ export const SearchFilters: FC<SearchFiltersProps> = ({ onSearch, initialFilters
       }
     });
     return () => subscription.unsubscribe();
-  }, [form.watch, form]); // Removed form dependency as watch is stable
+  }, [form.watch]); // Removed form dependency as watch is stable
 
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const searchCriteria: SearchCriteria = {
       color: values.color || '',
       model: values.model || '',
-      type: values.type || '',
+      type: values.type || '', // Already handles '' correctly if 'any' was selected
       minPrice: values.priceRange[0],
       maxPrice: values.priceRange[1],
     };
@@ -153,8 +153,8 @@ export const SearchFilters: FC<SearchFiltersProps> = ({ onSearch, initialFilters
                       - Update onValueChange to map "any" back to empty string for the form state.
                     */}
                     <Select
-                      onValueChange={(value) => field.onChange(value === 'any' ? '' : value)}
-                      value={field.value === '' || field.value === undefined ? 'any' : field.value} // Map empty/undefined form value to "any"
+                      onValueChange={(value) => field.onChange(value === 'any' ? '' : value)} // Map 'any' back to '' for form state
+                      value={field.value === '' || field.value === undefined ? 'any' : field.value} // Map empty/undefined form value to "any" for display
                       dir="rtl" // Ensure Select direction is RTL
                     >
                       <FormControl>
@@ -163,8 +163,8 @@ export const SearchFilters: FC<SearchFiltersProps> = ({ onSearch, initialFilters
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                         {/* Change value from "" to "any" */}
-                         <SelectItem value="any">هر نوع</SelectItem> {/* Use "any" for value */}
+                         {/* Change value from "" to "any" to avoid error */}
+                         <SelectItem value="any">هر نوع</SelectItem>
                          {carTypes.map((type) => (
                            <SelectItem key={type.value} value={type.value}>{type.label}</SelectItem>
                          ))}
@@ -221,4 +221,3 @@ export const SearchFilters: FC<SearchFiltersProps> = ({ onSearch, initialFilters
     </Card>
   );
 };
-
