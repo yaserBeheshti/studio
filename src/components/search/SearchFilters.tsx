@@ -1,3 +1,4 @@
+
 'use client';
 
 import type { FC } from 'react';
@@ -80,7 +81,7 @@ export const SearchFilters: FC<SearchFiltersProps> = ({ onSearch, initialFilters
       }
     });
     return () => subscription.unsubscribe();
-  }, [form.watch, form]);
+  }, [form.watch, form]); // Removed form dependency as watch is stable
 
 
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -96,7 +97,8 @@ export const SearchFilters: FC<SearchFiltersProps> = ({ onSearch, initialFilters
 
    // Function to format price with commas and currency symbol (adjust if needed)
    const formatPrice = (price: number) => {
-    return `$${price.toLocaleString()}`; // Keep dollar sign for now, can be localized later
+    // Consider using Intl.NumberFormat for better localization in the future
+    return `$${price.toLocaleString('fa-IR')}`; // Using fa-IR for potential Persian number formatting
    };
 
 
@@ -146,14 +148,23 @@ export const SearchFilters: FC<SearchFiltersProps> = ({ onSearch, initialFilters
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>نوع</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value || ""}>
+                    {/*
+                      - Pass a value prop to Select, mapping empty string form value to "any".
+                      - Update onValueChange to map "any" back to empty string for the form state.
+                    */}
+                    <Select
+                      onValueChange={(value) => field.onChange(value === 'any' ? '' : value)}
+                      value={field.value === '' || field.value === undefined ? 'any' : field.value} // Map empty/undefined form value to "any"
+                      dir="rtl" // Ensure Select direction is RTL
+                    >
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="نوع خودرو را انتخاب کنید" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                         <SelectItem value="">هر نوع</SelectItem> {/* Add an option for any type */}
+                         {/* Change value from "" to "any" */}
+                         <SelectItem value="any">هر نوع</SelectItem> {/* Use "any" for value */}
                          {carTypes.map((type) => (
                            <SelectItem key={type.value} value={type.value}>{type.label}</SelectItem>
                          ))}
@@ -174,7 +185,7 @@ export const SearchFilters: FC<SearchFiltersProps> = ({ onSearch, initialFilters
                   <FormControl>
                      <Slider
                         dir="rtl" // Set slider direction to RTL
-                        defaultValue={[initialFilters.minPrice, initialFilters.maxPrice]}
+                        value={field.value} // Use controlled value from RHF
                         min={0}
                         max={MAX_PRICE}
                         step={1000}
@@ -210,3 +221,4 @@ export const SearchFilters: FC<SearchFiltersProps> = ({ onSearch, initialFilters
     </Card>
   );
 };
+
