@@ -67,6 +67,13 @@ export default {
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
+      // Using logical properties (space-x-reverse, etc.) is often preferred over explicit RTL variants
+      // spacing: { // Example if needed
+      //   'rtl-2': '0.5rem',
+      // },
+      // borderWidth: { // Example if needed
+      //   'rtl-DEFAULT': '1px',
+      // },
   		keyframes: {
   			'accordion-down': {
   				from: {
@@ -92,4 +99,14 @@ export default {
   	}
   },
   plugins: [require("tailwindcss-animate")],
+  // variants: { // Example if explicit variants needed, usually not required with logical props
+  //   extend: {
+  //     margin: ['rtl'],
+  //     padding: ['rtl'],
+  //     space: ['rtl'],
+  //     textAlign: ['rtl'],
+  //     borderWidth: ['rtl'],
+  //     borderRadius: ['rtl'],
+  //   },
+  // },
 } satisfies Config;

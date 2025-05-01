@@ -47,7 +47,16 @@ const formSchema = z.object({
   priceRange: z.array(z.number()).min(2).max(2),
 });
 
-const carTypes = ['Sedan', 'SUV', 'Truck', 'Coupe', 'Convertible', 'Hatchback', 'Van'];
+// Translate car types to Persian
+const carTypes = [
+  { value: 'sedan', label: 'سدان' },
+  { value: 'suv', label: 'شاسی بلند' },
+  { value: 'truck', label: 'وانت' },
+  { value: 'coupe', label: 'کوپه' },
+  { value: 'convertible', label: 'کروک' },
+  { value: 'hatchback', label: 'هاچ بک' },
+  { value: 'van', label: 'ون' },
+];
 const MAX_PRICE = 100000; // Define a max price for the slider
 
 export const SearchFilters: FC<SearchFiltersProps> = ({ onSearch, initialFilters, isLoading }) => {
@@ -85,12 +94,18 @@ export const SearchFilters: FC<SearchFiltersProps> = ({ onSearch, initialFilters
     onSearch(searchCriteria);
   }
 
+   // Function to format price with commas and currency symbol (adjust if needed)
+   const formatPrice = (price: number) => {
+    return `$${price.toLocaleString()}`; // Keep dollar sign for now, can be localized later
+   };
+
+
   return (
     <Card className="w-full shadow-md">
       <CardHeader>
         <CardTitle className="text-xl text-primary flex items-center gap-2">
-            <Search className="w-5 h-5" />
-            Search Filters
+            <Search className="w-5 h-5 ml-2" /> {/* Moved icon to the left for RTL */}
+            فیلترهای جستجو
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -102,9 +117,9 @@ export const SearchFilters: FC<SearchFiltersProps> = ({ onSearch, initialFilters
                 name="model"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Model</FormLabel>
+                    <FormLabel>مدل</FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g., Camry, F-150" {...field} />
+                      <Input placeholder="مثلا کمری، F-150" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -116,9 +131,9 @@ export const SearchFilters: FC<SearchFiltersProps> = ({ onSearch, initialFilters
                 name="color"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Color</FormLabel>
+                    <FormLabel>رنگ</FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g., Silver, Blue" {...field} />
+                      <Input placeholder="مثلا نقره‌ای، آبی" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -130,18 +145,18 @@ export const SearchFilters: FC<SearchFiltersProps> = ({ onSearch, initialFilters
                 name="type"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Type</FormLabel>
+                    <FormLabel>نوع</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value || ""}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select car type" />
+                          <SelectValue placeholder="نوع خودرو را انتخاب کنید" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {/* Removed <SelectItem value="">Any Type</SelectItem> as it causes error */}
-                        {carTypes.map((type) => (
-                           <SelectItem key={type} value={type.toLowerCase()}>{type}</SelectItem>
-                        ))}
+                         <SelectItem value="">هر نوع</SelectItem> {/* Add an option for any type */}
+                         {carTypes.map((type) => (
+                           <SelectItem key={type.value} value={type.value}>{type.label}</SelectItem>
+                         ))}
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -155,9 +170,10 @@ export const SearchFilters: FC<SearchFiltersProps> = ({ onSearch, initialFilters
               name="priceRange"
               render={({ field }) => (
                 <FormItem>
-                   <FormLabel>Price Range: ${priceRange[0].toLocaleString()} - ${priceRange[1].toLocaleString()}</FormLabel>
+                   <FormLabel>محدوده قیمت: {formatPrice(priceRange[0])} - {formatPrice(priceRange[1])}</FormLabel>
                   <FormControl>
                      <Slider
+                        dir="rtl" // Set slider direction to RTL
                         defaultValue={[initialFilters.minPrice, initialFilters.maxPrice]}
                         min={0}
                         max={MAX_PRICE}
@@ -177,13 +193,13 @@ export const SearchFilters: FC<SearchFiltersProps> = ({ onSearch, initialFilters
             <Button type="submit" disabled={isLoading} className="w-full md:w-auto bg-accent text-accent-foreground hover:bg-accent/90">
               {isLoading ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Searching...
+                    <Loader2 className="ml-2 h-4 w-4 animate-spin" /> {/* Moved icon to the left */}
+                    در حال جستجو...
                   </>
                 ) : (
                   <>
-                    <Search className="mr-2 h-4 w-4" />
-                    Search Cars
+                    <Search className="ml-2 h-4 w-4" /> {/* Moved icon to the left */}
+                    جستجوی خودرو
                   </>
                 )
               }

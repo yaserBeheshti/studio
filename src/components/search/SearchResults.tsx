@@ -8,6 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { Badge } from "@/components/ui/badge"
 import { AlertCircle, Car, Palette, Tag, CalendarDays } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
+import { faIR } from 'date-fns/locale'; // Import Persian locale
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 
@@ -29,7 +30,13 @@ interface SearchResultsProps {
 }
 
 const ResultCard: FC<{ message: CarMessage }> = ({ message }) => {
-  const timeAgo = formatDistanceToNow(new Date(message.timestamp), { addSuffix: true });
+  // Format time ago in Persian
+  const timeAgo = formatDistanceToNow(new Date(message.timestamp), { addSuffix: true, locale: faIR });
+
+  // Function to format price with commas and currency symbol (adjust if needed)
+  const formatPrice = (price: number) => {
+    return `$${price.toLocaleString()}`; // Keep dollar sign for now, can be localized later
+   };
 
   return (
     <Card className="w-full overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 bg-card">
@@ -48,23 +55,27 @@ const ResultCard: FC<{ message: CarMessage }> = ({ message }) => {
         )}
         <CardTitle className="text-lg font-semibold text-primary">{message.model}</CardTitle>
         <CardDescription className="text-sm text-muted-foreground flex items-center gap-1">
-          <CalendarDays className="w-3 h-3" /> Posted {timeAgo}
+          <CalendarDays className="w-3 h-3 ml-1" /> {/* Added margin for RTL */}
+           ارسال شده {timeAgo}
         </CardDescription>
       </CardHeader>
       <CardContent className="p-4 pt-0 space-y-3">
         <p className="text-foreground text-base">{message.snippet}</p>
          <div className="flex flex-wrap gap-2 items-center text-sm">
            <Badge variant="secondary" className="flex items-center gap-1">
-             <Palette className="w-3 h-3" /> {message.color}
+             <Palette className="w-3 h-3 ml-1" /> {/* Added margin for RTL */}
+             {message.color}
            </Badge>
            <Badge variant="secondary" className="flex items-center gap-1">
-             <Car className="w-3 h-3" /> {message.type}
+             <Car className="w-3 h-3 ml-1" /> {/* Added margin for RTL */}
+             {message.type}
            </Badge>
          </div>
       </CardContent>
       <CardFooter className="p-4 pt-0 flex justify-between items-center bg-secondary/30">
         <span className="text-lg font-bold text-accent flex items-center gap-1">
-           <Tag className="w-4 h-4" /> ${message.price.toLocaleString()}
+           <Tag className="w-4 h-4 ml-1" /> {/* Added margin for RTL */}
+           {formatPrice(message.price)}
         </span>
         {/* Add action buttons if needed later, e.g., View on Telegram */}
       </CardFooter>
@@ -107,7 +118,7 @@ export const SearchResults: FC<SearchResultsProps> = ({ results, isLoading, hasS
   if (!hasSearched) {
      return (
         <div className="text-center py-10 text-muted-foreground">
-            <p>Enter your criteria above and click search to find cars.</p>
+            <p>معیارهای خود را در بالا وارد کرده و برای یافتن خودروها روی جستجو کلیک کنید.</p>
         </div>
      );
   }
@@ -116,10 +127,10 @@ export const SearchResults: FC<SearchResultsProps> = ({ results, isLoading, hasS
   if (results.length === 0) {
     return (
        <Alert variant="default" className="mt-6 bg-secondary">
-          <AlertCircle className="h-4 w-4" />
-          <AlertTitle>No Results Found</AlertTitle>
+          <AlertCircle className="h-4 w-4 ml-2" /> {/* Added margin for RTL */}
+          <AlertTitle>نتیجه‌ای یافت نشد</AlertTitle>
           <AlertDescription>
-            Try adjusting your search filters for broader results.
+            برای نتایج گسترده‌تر، فیلترهای جستجوی خود را تنظیم کنید.
           </AlertDescription>
        </Alert>
     );

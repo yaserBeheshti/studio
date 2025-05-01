@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Vazirmatn', Tahoma, Arial, sans-serif; /* Added Vazirmatn, common Persian font */
+  direction: rtl; /* Set text direction to right-to-left */
 }
 
 @layer base {
@@ -110,3 +111,22 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Add Vazirmatn font face */
+@font-face {
+  font-family: Vazirmatn;
+  src: url('/fonts/webfonts/Vazirmatn-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Vazirmatn;
+  src: url('/fonts/webfonts/Vazirmatn-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Add other weights as needed */

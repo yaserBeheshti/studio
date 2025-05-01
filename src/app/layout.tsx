@@ -1,19 +1,13 @@
 import type { Metadata } from 'next';
-import { Geist } from 'next/font/google'; // Assuming Geist is the chosen font
+// Removed Geist font import
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster" // Import Toaster
 
-const geistSans = Geist({
-  variable: '--font-geist-sans', // Make sure variable names match font setup
-  subsets: ['latin'],
-});
-
-// If you have a mono font, include it similarly
-// const geistMono = Geist_Mono({...});
+// Removed font loading setup
 
 export const metadata: Metadata = {
-  title: 'Telegram Auto Finder', // Updated title
-  description: 'Search for car deals from Telegram messages', // Updated description
+  title: 'یابنده خودکار تلگرام', // Updated title to Persian
+  description: 'جستجوی معاملات خودرو از پیام‌های تلگرام', // Updated description to Persian
 };
 
 export default function RootLayout({
@@ -22,9 +16,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      {/* Apply font variables to the body */}
-      <body className={`${geistSans.variable} antialiased`}>
+    // Set lang to "fa" for Persian
+    <html lang="fa" dir="rtl">
+      {/* Removed font variable application */}
+      <body className={`antialiased`}>
         {children}
         <Toaster /> {/* Add Toaster here */}
       </body>

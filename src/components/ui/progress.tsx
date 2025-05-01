@@ -15,11 +15,13 @@ const Progress = React.forwardRef<
       "relative h-4 w-full overflow-hidden rounded-full bg-secondary",
       className
     )}
+    dir="rtl" // Set direction to RTL for progress bar
     {...props}
   >
     <ProgressPrimitive.Indicator
       className="h-full w-full flex-1 bg-primary transition-all"
-      style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
+      // Adjust translateX for RTL: positive value moves from right to left
+      style={{ transform: `translateX(${100 - (value || 0)}%)` }}
     />
   </ProgressPrimitive.Root>
 ))

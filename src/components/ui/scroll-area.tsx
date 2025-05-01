@@ -32,8 +32,9 @@ const ScrollBar = React.forwardRef<
     orientation={orientation}
     className={cn(
       "flex touch-none select-none transition-colors",
+      // Adjusted border and padding for vertical scrollbar in RTL
       orientation === "vertical" &&
-        "h-full w-2.5 border-l border-l-transparent p-[1px]",
+        "h-full w-2.5 border-r border-r-transparent p-[1px] rtl:border-l rtl:border-l-transparent rtl:border-r-0",
       orientation === "horizontal" &&
         "h-2.5 flex-col border-t border-t-transparent p-[1px]",
       className

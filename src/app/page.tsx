@@ -30,11 +30,11 @@ const HomePage: FC = () => {
 
     // Basic mock data generation - refine as needed
     const mockData: CarMessage[] = [
-      { id: '1', model: 'Toyota Camry', color: 'Silver', type: 'Sedan', price: 25000, snippet: 'Slightly used Toyota Camry, great condition. Low mileage.', imageUrl: `https://picsum.photos/seed/1/400/300`, timestamp: new Date(Date.now() - Math.random() * 1000000000) },
-      { id: '2', model: 'Honda CR-V', color: 'Blue', type: 'SUV', price: 32000, snippet: 'Family-friendly Honda CR-V available now. spacious interior.', imageUrl: `https://picsum.photos/seed/2/400/300`, timestamp: new Date(Date.now() - Math.random() * 1000000000) },
-      { id: '3', model: 'Ford F-150', color: 'Black', type: 'Truck', price: 45000, snippet: 'Powerful Ford F-150, perfect for work. Towing package included.', imageUrl: `https://picsum.photos/seed/3/400/300`, timestamp: new Date(Date.now() - Math.random() * 1000000000) },
-      { id: '4', model: 'Tesla Model 3', color: 'White', type: 'Sedan', price: 55000, snippet: 'Electric Tesla Model 3 Long Range. Autopilot included.', imageUrl: `https://picsum.photos/seed/4/400/300`, timestamp: new Date(Date.now() - Math.random() * 1000000000) },
-      { id: '5', model: 'BMW X5', color: 'Gray', type: 'SUV', price: 65000, snippet: 'Luxury BMW X5 with premium package. Low mileage.', imageUrl: `https://picsum.photos/seed/5/400/300`, timestamp: new Date(Date.now() - Math.random() * 1000000000) },
+      { id: '1', model: 'Toyota Camry', color: 'نقره ای', type: 'Sedan', price: 25000, snippet: 'تویوتا کمری کم کارکرد، وضعیت عالی. کارکرد پایین.', imageUrl: `https://picsum.photos/seed/1/400/300`, timestamp: new Date(Date.now() - Math.random() * 1000000000) },
+      { id: '2', model: 'Honda CR-V', color: 'آبی', type: 'SUV', price: 32000, snippet: 'هوندا CR-V مناسب خانواده هم اکنون موجود است. فضای داخلی جادار.', imageUrl: `https://picsum.photos/seed/2/400/300`, timestamp: new Date(Date.now() - Math.random() * 1000000000) },
+      { id: '3', model: 'Ford F-150', color: 'مشکی', type: 'Truck', price: 45000, snippet: 'فورد F-150 قدرتمند، عالی برای کار. پکیج بکسل گنجانده شده است.', imageUrl: `https://picsum.photos/seed/3/400/300`, timestamp: new Date(Date.now() - Math.random() * 1000000000) },
+      { id: '4', model: 'Tesla Model 3', color: 'سفید', type: 'Sedan', price: 55000, snippet: 'تسلا مدل 3 برقی Long Range. اتوپایلوت گنجانده شده است.', imageUrl: `https://picsum.photos/seed/4/400/300`, timestamp: new Date(Date.now() - Math.random() * 1000000000) },
+      { id: '5', model: 'BMW X5', color: 'خاکستری', type: 'SUV', price: 65000, snippet: 'بی ام و X5 لوکس با پکیج پریمیوم. کارکرد پایین.', imageUrl: `https://picsum.photos/seed/5/400/300`, timestamp: new Date(Date.now() - Math.random() * 1000000000) },
     ];
 
      // Simple filtering logic (expand this for better matching)
@@ -62,8 +62,8 @@ const HomePage: FC = () => {
   return (
     <div className="min-h-screen bg-background p-4 md:p-8 flex flex-col items-center">
       <header className="w-full max-w-4xl mb-6 text-center">
-        <h1 className="text-3xl font-bold text-primary mb-2">Telegram Auto Finder</h1>
-        <p className="text-muted-foreground">Find car deals from Telegram messages</p>
+        <h1 className="text-3xl font-bold text-primary mb-2">یابنده خودکار تلگرام</h1>
+        <p className="text-muted-foreground">معاملات خودرو را از پیام‌های تلگرام پیدا کنید</p>
       </header>
 
       <div className="w-full max-w-4xl mb-8">
