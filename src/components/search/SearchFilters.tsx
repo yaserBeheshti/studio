@@ -131,14 +131,14 @@ export const SearchFilters: FC<SearchFiltersProps> = ({ onSearch, initialFilters
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Type</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select onValueChange={field.onChange} defaultValue={field.value || ""}>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select car type" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="">Any Type</SelectItem>
+                        {/* Removed <SelectItem value="">Any Type</SelectItem> as it causes error */}
                         {carTypes.map((type) => (
                            <SelectItem key={type} value={type.toLowerCase()}>{type}</SelectItem>
                         ))}
